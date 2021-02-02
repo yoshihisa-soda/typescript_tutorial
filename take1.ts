@@ -6,6 +6,7 @@ import { NumericLiteral } from "typescript";
 const name = "小動物";
 
 let animalName;
+let mode: string;
 if (mode === "slack") {
     animalName = "柴犬";
 } else if (mode === "twitter") {
