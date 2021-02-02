@@ -50,3 +50,5 @@ console.log(Stirng(false)); // こちらでも可
 
 // 文字列の結合
 console.log(`[Debug]: ${variable}`);
+
+console.log("#################");
