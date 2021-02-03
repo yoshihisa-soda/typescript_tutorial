@@ -52,3 +52,16 @@ console.log(Stirng(false)); // こちらでも可
 console.log(`[Debug]: ${variable}`);
 
 console.log("#################");
+
+// undefinedとnull
+
+// let favoriteGame: string; // まだ代入してないので undefined;
+// console.log(favoriteGame);
+
+function print(name: string, age?: number) {
+    console.log(`name: ${name}, age: ${age || 'empty'}`);
+}
+
+// string か null を入れられるという宣言をして null を入れる
+// nullオンリーはあまりよくない
+let favoriteGame: string | null = null;
