@@ -83,3 +83,66 @@ stations.sort((a, b) => {
 // }
 //
 
+// iterable とイテレータ
+const a = ["a", "b", "c"];
+const b = [[0, "a"], [1, "b"], [2, "c"]];
+
+// この 2 つの結果は同じ
+for (const [i, v] of a.entries()) { console.log(i, v); }
+for (const [i, v] of b) { console.log(i, v); }
+
+// 読み取り専用
+const abc: readonly number[] = [1, 2, 3, 4, 5];
+// 値やリテラルにつける場合はas const
+const cba = [5, 4, 3, 2, 1] as const;
+
+const readonlyArray: readonly number[] = [1, 2, 3];
+const mutableArray: number[] = [1, 2, 3];
+
+function acceptReadonlyArray(a: readonly number[]) {
+
+}
+
+function acceptMutableArray(b: number[]) {
+
+}
+
+// OK
+const readonlyVar: readonly number[] = mutableArray;
+// NG
+// const mutableVar: number[] = readonlyArray;
+
+const mutableVar: number[] = readonlyArray as number[];
+acceptMutableArray(readonlyArray as number[]);
+
+// リテラル 数値や文字列を直接記述した定数のこと (例: const literal = "これはリテラルです";)
+// iterable(繰り返し可能), イテレータ: 配列やそれに類似する集合的データ構造（コレクションあるいはコンテナ）の各要素に対する繰り返し処理の抽象化
+
+
+// オブジェクト
+// 定義はキー、コロン (:)、値を書く。要素間は改行
+const key = 'favorite drink';
+
+const bigAnimal = {
+    sName: "動物",
+    favorite: "いちご",
+    'hometown': "ここ",
+    [key]: "お酒"
+}
+
+// 参照は `.`+ 名前、もしくは [名前]
+console.log(bigAnimal.sName); // 動物
+console.log(bigAnimal[key]); // ストロングゼロ
+
+// JSON（JavaScript Object Notation）
+// API通信で使われるデータフォーマットとしてはトップシェア
+
+// 1つめの引数: オブジェクトや配列、文字列などを入れる
+// 2つめの引数: データ変換をしたいときの変換関数（ログ出力からパスワードをマスクしたいなど）
+// 省略可能。通常は null
+// 3つめの引数: 配列やオブジェクトでインデントするときのインデント幅
+// 省略可能, 省略すると改行なしの 1行で出力される
+const json = JSON.stringify(bigAnimal, null, 2);
+
+// これは複製されて出てくるので、元のbigAnimalとは別物
+const bigAnimal2 = JSON.parse(json);
