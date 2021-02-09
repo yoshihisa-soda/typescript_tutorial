@@ -140,3 +140,89 @@ type Column = {
 // 数字型 or 文字列
 // オブジェクトの特定の属性 columnType -> 'check' という文字列の場合のみ属性が増える
 
+// userNameOrId は文字列か数値
+let userNameOrId: string | number = getUser();
+
+if (typeof userNameOrId === "string")
+{
+    // このif文の中では、userNameOrIdは文字列型として扱われる
+    this.setState({
+        userName: userNameOrId.toUpperCase()
+    });
+}
+else
+{
+    // このelse文の中では、userNameOrIdは数値型として扱われる
+    const user = this.repository.findUserByID(userNameOrId);
+    this.setState({
+        userName: user.getName()
+    });
+}
+
+type Column = CheckColumn | NumberColumn;
+
+function getValue(column: Column): string {
+    if (column.field === 'number') {
+        // ここではcolumnは「NumberColumn」型
+    } else {
+        // ここではcolumnは「CheckColumn」型
+    }
+}
+
+// ユーザー定義の型ガード
+function isArray(arg: any): arg is Array {
+    return Array.isArray(arg);
+}
+
+// 型アサーション(表明)
+// 表明: プログラムのその箇所で必ず真であるべき式の形式をとる。多くの言語ではそのような前提条件のチェックに表明を使用する。
+
+const page: any = { name: "profile page" };
+// any型はasを使用してどんな型にでも変換できる
+const pageName: string = page as string;
+
+type Park = {
+    name: string;
+    hasTako: boolean;
+};
+
+// Park のキーである"name" | "hasTako"が割り当てられる
+type Key = keyof Park;
+// 指定されたキー以外はエラーになる
+const key: Key = "name";
+// 1 行でも書ける
+const key: keyof Park = "hasTako";
+// 値の方の型も取れる (string になる)
+type ParkName = Park["name"];
+// 指定されたキー以外はエラーになる
+const key: keyof Park = "name";
+
+// 読み込み専用の型定義
+type ParkForm = {
+    name: string;
+    hasTako: boolean;
+};
+// 値を全て読み込み専用にした型
+type FrozenParkForm = { readonly [K in keyof ParkForm]: ParkForm[K] };
+const form: FrozenParkForm = {
+    name: "恵比寿東",
+    hasTako: true
+};
+// 読み込み専用なのでエラーになる
+form.name = "和布刈公園"
+
+// インターフェースを使った型定義
+interface Pepole {
+    name: string;
+    favoriteBank: string;
+    favoriteGyudon?: string;
+}
+
+// 2つのインタフェースの継承
+interface PartyPeople extends Twitter, Instagram {
+}
+
+const shibukawachan: PartyPeople = {
+    twitterId: "@shibu_jp",
+    instagramId: "shibukawachan"
+}
