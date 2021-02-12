@@ -92,3 +92,64 @@ f(); // 省略して呼べる
 function fav ({ name="小動物", favorite="小豆餅" } = {}) {
     // :
 }
+
+// 関数を含むオブジェクトの定義方法
+const smallAnimal = {
+    getName() {
+        return "小動物";
+    },
+    _favorite: "小笠原";
+    get favorite() {
+        return this._favorite;
+    },
+    set favorite(favorite) {
+        this._favorite = favorite;
+    }
+};
+
+// クロージャーとthisとアロー関数
+function a() {
+    const b = 10;
+    function c() {
+        console.log({b}); // bが表示される
+    }
+    c();
+}
+
+// アロー関数ならその外の this が維持される
+this.button.addEventListener("click", () => {
+    this.smallAnimal.walkTo("タコ公園");
+});
+
+// アロー関数の表記方法のバリエーション
+// 基本系
+(arg1, arg2) => { /* 式 */ };
+
+// 引数が 1 つの場合は引数のカッコを省略できる
+// ただし型を書くとエラーになる
+arg1 => { /* 式 */ };
+
+// 引数が0の場合はカッコが必要
+() => { /* 式 */ };
+
+// 式の{ }を省略すると、式の結果がreturnされる
+arg => arg * 2;
+
+// { }をつける場合は、値を返すときはreturnを書かなければならない
+arg => {
+    return arg * 2;
+};
+
+function f(a, b, c) {
+    console.log(a, b, c);
+}
+const params = [1, 2, 3];
+// 新: スプレッド構文を使うと同じことが簡単に行える
+f(...params);
+// 新: スプレッド構文。固定属性との共存もラクラク
+const f = (a, b, ...c) => {
+    console.log(a, b, c);
+};
+f(1, 2, 3, 4, 5, 6);
+
+// 即時実行関数はもう使わない
