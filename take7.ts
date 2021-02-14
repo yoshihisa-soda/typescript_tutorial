@@ -1,5 +1,7 @@
 // <Dateクラス>
 
+import { convertCompilerOptionsFromJson } from "typescript";
+
 // 現在時刻の取得
 // 現在時刻でDateのインスタンス作成
 const now = new Date();
@@ -64,3 +66,74 @@ todayMeeting.setFullYear(now.getFullYear(), now.getMonth(), now.getDate());
 const now5 = new Date();
 console.log(now5.toLocaleDateString('en-US', { timeZone: 'America/Los_Angeles' }));
 // '12/8/2020, 2:19:55 AM'
+
+
+
+
+// <RegExpクラス>
+
+// 正規表現
+// 正規表現は string と一緒に使うクラスで、ちょっと賢い検索を実現
+
+// 正規表現はリテラルで記述できる
+const input = "03-1234-5678";
+
+if (input.match(/\d{2,3}-\d{3,4}-\d{4}/)) {
+    console.log("電話番号です");
+}
+
+// \s（改行やタブなどのスペースにマッチ）
+// \w（英数字にマッチ）
+// \d（数字にマッチ）
+// 大文字にすると否定（\S は改行タブスペース以外にマッチ）
+// . はすべての文字にマッチ
+// 先頭の^は文字列の先頭、最後の$は末尾
+
+// 日本の郵便番号は数字3桁 + 数字4桁
+const postalCode = "299-2205";
+if (postalCode.match(/\d{3} -\d{4}/)) {
+    console.log("郵便番号です");
+}
+
+const tel = (/(^0\d-\d{4}-\d{4}$)|(^0\d{2}-\d{3}-\d{4}$)|(^0\d{3}-\d{2}-\d{4}$)|(^0\d{4}-\d-\d{4}$)/);
+"042-234-1234".match(tel);
+
+// index: 入力文字列の何番目の文字列からマッチしたか（マッチするまでに何文字読み飛ばしたか）
+// input: 正規表現と比較した入力値
+// groups: 名前付きグループの場合、名前ごとのマッチ結果
+
+// 市外局番: Area Code
+// 市内局番: Message Area
+// 加入者番号: Subscriber Number
+const match = "01-2345-6789".match(/^(?<AC>0\d{1})-(?<MA>\d{4})-(?<SA>\d{4})$/);
+// const { AC, MA, SA } = match.groups;
+
+// JSONのパース
+// aはany型
+const a = JSON.parse(`{ "name": "John Cleese"}`);
+// as で型情報を付与できる
+const p = JSON.parse(`{"name": "Terry Gilliam"}`) as Person;
+
+// SyntaxError 例外
+let person: Person;
+try {
+    person = JSON.parse(input);
+} catch (e: unknown){
+    // fallback
+    person = { name: "Eric Idle" };
+}
+
+const res = await fetch("/api/person");
+// 本当は res.ok で通信が成功したかチェックが必要！
+person = { name: "Michael Palin" };
+
+// b は文字列
+// stringify()の引数は2つ, 1:置換関数, 2:インデント
+const b = JSON.stringify({person: "Graham Chapman"});
+
+const c = new URL("https://caniuse.com/?search=url%20search%20params")
+// URL {
+// href: 'https://caniuse.com/?search=url%20search%20params',
+// origin: 'https://caniuse.com',
+// searchParams: URLSearchParams { 'search' => 'url search params' },
+// }
