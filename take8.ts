@@ -1,5 +1,7 @@
 // オブジェクト指向
 
+import { isMethodDeclaration } from "typescript";
+
 // 基本のクラス宣言
 // TypeScript ではプロパティの定義をクラス宣言の中で行う必要がある
 
@@ -61,3 +63,64 @@ class BigAnimal {
     }
 }
 
+// static メンバー
+class StaticSample {
+    // 静的なプロパティ
+    static staticVariable: number;
+    // 通常のプロパティ
+    variable: number = 3;
+
+    // 静的なメソッド
+    static classMethod() {
+        console.log(this.staticVariable);
+        console.log(StaticSample.staticVariable);
+    // 通常のプロパティは参照不可
+    // console.log(variable);
+    }
+
+    method() {
+        // 通常のメソッドから通常のプロパティは ``this.`` で参照可能
+        console.log(this.variable);
+        // 通常のメソッドから静的なプロパティは ``クラス名.`` で参照可能
+        console.log(StaticSample.staticVariable);
+        // 通常のメソッドから静的なプロパティを ``this.`` では参照不可
+        // console.log(this.staticVariable);
+    }
+}
+
+class Point {
+    // 通常のコンストラクタ
+    constructor(public x: number, public y: number) {}
+
+    // 極座標のファクトリーメソッド
+    static polar(length: number, angle: number): Point {
+        return new Point(
+            length * Math.cos(angle),
+            length * Math.sin(angle)
+        );
+    }
+}
+
+console.log(new Point(10, 20));
+console.log(Point.polar(10, Math.PI * 0.25));
+
+// 静的なプロパティを使いすぎると、複製できないクラスになってしまい、テストなどがしにくくなる
+
+// 新: インスタンスクラスフィールドを使う場合
+class FoolAnimal {
+    fav = "小田原";
+    say = () => {
+        console.log(`私は ${this.fav} が好きです`);
+    }
+
+
+// 読み込み専用の変数（readonly）
+class SimLockPhone {
+    readonly carrier: string;
+    constructor(carrier) {
+        this.carrier = carrier;
+    }
+}
+
+const myPhone = new SimLockPhone("Docomo");
+// myPhone.carrier = "au";
