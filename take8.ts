@@ -124,3 +124,52 @@ class SimLockPhone {
 
 const myPhone = new SimLockPhone("Docomo");
 // myPhone.carrier = "au";
+
+
+class HappySet {
+    eat() {
+        console.log("マック食べよう");
+    }
+}
+
+class PoisonSet extends HappySet {
+    eat() {
+        console.log("シュークリームを食べに行きました");
+    }
+}
+
+// インタフェースには実装がないため、推測ができず、常に any （なにかを返す）という型になってしまう
+// void型を含め、手動で型をつける必要がある
+interface Animal {
+    eat(): void;
+}
+
+class Dog implements Animal {
+    eat() {
+        console.log("中本を食べに行きました");
+    }
+}
+
+// デコレーター
+// 決まった引数とレスポンスを持つ関数を作り、@の記号をつけて、
+// クラスなどの前に付与すると、宣言が完了したオブジェクトなどが引数に入ってこの関数が呼ばれる
+
+function StrongZero(target) {
+    target.prototype.drink = function() {
+        console.log("ストロングゼロを飲んだ");
+    };
+    return target;
+}
+
+@StrongZero
+class HumanBaby {
+    hit() {
+        console.log("あああああああああ");
+    }
+}
+
+const sa = new HumanBaby();
+sa.hit();
+
+
+
